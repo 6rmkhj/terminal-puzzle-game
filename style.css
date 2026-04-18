@@ -1,0 +1,233 @@
+/* 기본 */
+body {
+    margin: 0;
+    background: #000;
+    color: #00ff00;
+    font-family: "Courier New", monospace;
+    overflow: auto; /* 핵심: 전체 스크롤 허용 */
+}
+
+/* 숨김 */
+.hidden {
+    display: none;
+}
+
+/* 부팅 화면 */
+#boot-screen {
+    padding: 20px;
+    white-space: pre-line;
+}
+
+/* HUD (상단 상태바) */
+#hud {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 12px;
+    border-bottom: 1px solid #00ff00;
+    font-size: 12px;
+}
+
+/* 상태 표시 */
+.danger {
+    color: red;
+    animation: blink 1s infinite;
+}
+
+/* 터미널 전체 */
+#terminal {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 40px);
+}
+
+/* 출력 영역 */
+#output {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;  /* 핵심: 내부 스크롤 */
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* 입력 줄 */
+#input-line {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #00ff00;
+}
+
+#input-line span {
+    margin-right: 6px;
+}
+
+/* 입력창 */
+#input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #00ff00;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+/* 깜빡임 효과 */
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+/* 스캔라인 효과 (해커 느낌) */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+        rgba(0,255,0,0.03) 0px,
+        rgba(0,255,0,0.03) 1px,
+        transparent 1px,
+        transparent 3px
+    );
+    pointer-events: none;
+}
+
+/* 글리치 효과 (옵션) */
+.glitch {
+    color: #0f0;
+    position: relative;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+}
+
+.glitch::before {
+    color: red;
+    animation: glitch 0.3s infinite;
+}
+
+.glitch::after {
+    color: blue;
+    animation: glitch 0.3s infinite reverse;
+}
+
+@keyframes glitch {
+    50% {
+        transform: translate(2px, -1px);
+    }
+}
+/* 가이드 화면 */
+#guide-screen {
+    padding: 20px;
+    white-space: pre-line;
+    height: 100vh;
+}
+/* HUD 영역 분리 */
+#hud {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 8px 12px;
+    border-bottom: 1px solid #00ff00;
+    font-size: 12px;
+}
+
+#hud-left { text-align: left; }
+#hud-center { text-align: center; }
+#hud-right { text-align: right; }
+
+/* 레벨 상승 연출 */
+.level-up {
+    color: yellow;
+    animation: blink 0.5s infinite;
+}
+
+/* 권한 색상 */
+.access-user { color: #00ff00; }
+.access-admin { color: orange; }
+.access-root { color: red; }
+
+/* ROOT 화면 */
+#root-overlay {
+    position: fixed;
+    inset: 0;
+    background: black;
+    color: #00ff00;
+    font-family: monospace;
+    padding: 20px;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+/* 깜빡임 */
+.root-text {
+    animation: blink 0.5s infinite;
+}
+
+/* 매트릭스 느낌 */
+@keyframes matrix {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+}
+
+.matrix-line {
+    position: absolute;
+    color: #0f0;
+    font-size: 12px;
+    animation: matrix linear infinite;
+}
+#root-overlay {
+    position: fixed;
+    inset: 0;
+    background: black;
+    color: #00ff00;
+    font-family: monospace;
+    padding: 20px;
+    z-index: 9999;
+    white-space: pre-wrap;
+}
+/* 기본 */
+#hud-center, #hud-right {
+    transition: all 0.3s ease;
+}
+
+/* GUEST */
+.access-guest {
+    color: #888;
+}
+
+/* USER */
+.access-user {
+    color: #00ffcc;
+}
+
+/* ANALYST */
+.access-analyst {
+    color: #00bfff;
+}
+
+/* ADMIN */
+.access-admin {
+    color: #ffcc00;
+    text-shadow: 0 0 5px #ffcc00;
+}
+
+/* ROOT */
+.access-root {
+    color: #ff0033;
+    text-shadow: 0 0 10px #ff0033, 0 0 20px #ff0033;
+}
+/* HUD 흔들림 */
+.hud-shake {
+    animation: hudShake 0.4s ease;
+}
+
+@keyframes hudShake {
+    0% { transform: translate(0, 0); }
+    20% { transform: translate(-2px, 1px); }
+    40% { transform: translate(2px, -1px); }
+    60% { transform: translate(-2px, 1px); }
+    80% { transform: translate(2px, -1px); }
+    100% { transform: translate(0, 0); }
+}

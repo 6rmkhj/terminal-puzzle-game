@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>INTERNAL SYSTEM ACCESS</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- 부팅 화면 -->
+<div id="boot-screen"></div>
+
+<!-- 가이드 화면 -->
+<div id="guide-screen" class="hidden"></div>
+
+<!-- 메인 UI -->
+<div id="main-ui" class="hidden">
+    <div id="hud">
+        <div id="hud-left">
+            USER: guest
+        </div>
+        <div id="hud-center">
+            ACCESS: USER
+        </div>
+        <div id="hud-right">
+            LEVEL: 1 / 5
+        </div>
+    </div>
+
+    <div id="terminal">
+        <div id="output"></div>
+        <div id="input-line">
+            <span>&gt;</span>
+            <input id="input" autocomplete="off" autofocus />
+        </div>
+    </div>
+</div>
+
+<script type="module">
+import { FileSystem } from "./js/FileSystem.js";
+import { TerminalCore } from "./js/TerminalCore.js";
+import { Terminal } from "./js/Terminal.js";
+import { PuzzleManager } from "./js/PuzzleManager.js";
+import { GameEngine } from "./js/GameEngine.js";
+
+/* =========================
+   1. 부팅
+========================= */
+const bootLines = [
+    "Booting secure system...",
+    "Loading kernel...",
+    "Initializing modules...",
+    "Security layer active",
+    "Access Granted."
+];
+
+const boot = document.getElementById("boot-screen");
+
+let i = 0;
+const bootInterval = setInterval(() => {
+    boot.textContent += bootLines[i] + "\n";
+    i++;
+
+    if (i >= bootLines.length) {
+        clearInterval(bootInterval);
+        boot.style.display = "none";
+        showGuide();
+    }
+}, 400);
+
+/* =========================
+   2. 가이드 화면
+========================= */
+function showGuide() {
+    const guide = document.getElementById("guide-screen");
+    guide.classList.remove("hidden");
+
+    const text = `
+[ SYSTEM ACCESS GUIDE ]
+
+당신은 내부 서버에 접근한 상태입니다.
+
+목표:
+시스템 로그를 분석하여 ROOT KEY를 찾아내십시오.
+
+사용 가능한 명령어:
+- ls        : 파일 목록
+- cd [dir]  : 디렉토리 이동
+- cat [file]: 파일 열기
+- grep [패턴] [파일]
+
+힌트:
+- 로그는 수천 줄입니다.
+- 정답은 단 하나입니다.
+- 일부 데이터는 인코딩되어 있습니다.
+- 개발자 도구 사용은 감지될 수 있습니다.
+
+정답 입력:
+answer [값]
+
+문의:
+6rmkhj@yu.ac.kr
+
+계속하려면 ENTER를 누르십시오...
+`;
+
+    typeText(guide, text, () => {
+        document.addEventListener("keydown", startGameOnce);
+    });
+}
+
+/* 타이핑 효과 */
+function typeText(el, text, callback) {
+    let i = 0;
+    const t = setInterval(() => {
+        el.textContent += text[i];
+        i++;
+        if (i >= text.length) {
+            clearInterval(t);
+            if (callback) callback();
+        }
+    }, 10);
+}
+
+/* =========================
+   3. 게임 시작
+========================= */
+function startGameOnce(e) {
+    if (e.key === "Enter") {
+        document.removeEventListener("keydown", startGameOnce);
+
+        document.getElementById("guide-screen").style.display = "none";
+        document.getElementById("main-ui").classList.remove("hidden");
+
+        startGame();
+    }
+}
+
+async function startGame() {
+    const puzzles = await fetch("./puzzles.json").then(r => r.json());
+
+    const fs = new FileSystem();
+    const core = new TerminalCore(fs);
+    const pm = new PuzzleManager(puzzles);
+    const engine = new GameEngine(fs, pm);
+
+    engine.init();
+    new Terminal(core, engine);
+}
+</script>
+
+</body>
+</html>
