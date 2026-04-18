@@ -13,7 +13,7 @@ export class FileSystem {
         };
     }
 
-    createFile(path, name, content, id) {
+    createFile(path, name, id, content) {
         if (typeof id !== "string") throw new Error("ID must be string");
         const dir = this._nav(path);
         dir.children[name] = { type:"file", content, id };

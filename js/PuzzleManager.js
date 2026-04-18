@@ -3,12 +3,19 @@ export class PuzzleManager {
         this.puzzles = puzzles;
     }
 
-    generateLogData(n=5000){
-        const logs=[];
-        for(let i=0;i<n;i++){
-            logs.push(`[INFO] ID:${Math.random().toString(36).slice(2,10)} OK`);
+    generateLogData() {
+        let logs = [];
+
+        const errorIndex = Math.floor(Math.random() * 1000);
+
+        for (let i = 0; i < 1000; i++) {
+            if (i === errorIndex) {
+                logs.push(`[ERROR] X-00712-CRITICAL`);
+            } else {
+                logs.push(`[INFO] process ${i}`);
+            }
         }
-        logs.push("[ERROR] ID:X-00712-CRITICAL DATA_CORRUPTED");
+
         return logs.join("\n");
     }
 }

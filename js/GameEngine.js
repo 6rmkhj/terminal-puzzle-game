@@ -32,7 +32,7 @@ export class GameEngine {
 
         this.fs.createFile(
             "/logs",
-            "deep2.log",
+            "deep.log",
             "003",
             `A1239Z67
     B999AA17
