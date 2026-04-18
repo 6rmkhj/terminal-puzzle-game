@@ -35,10 +35,10 @@ export class GameEngine {
             "deep.log",
             "003",
             `A1239Z67
-    B999AA17
-    QWEX1237
-    Z1A60007
-    LMN58888`
+B999AA17
+QWEX1237
+Z1A60007
+LMN58888`
         );
 
         this.fs.createFile(
@@ -65,7 +65,9 @@ export class GameEngine {
     however,
     some variables may be exposed globally.
 
-    try accessing them directly.`
+    try accessing them directly.
+    
+    For reference, the webpage's window object is the top-level global object representing the browser itself.`
         );
     }
 

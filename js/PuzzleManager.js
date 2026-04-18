@@ -12,7 +12,7 @@ export class PuzzleManager {
             if (i === errorIndex) {
                 logs.push(`[ERROR] X-00712-CRITICAL`);
             } else {
-                logs.push(`[INFO] process ${i}`);
+                logs.push(`[INFO] ID:${Math.random().toString(36).slice(2,10)} OK`);
             }
         }
 

@@ -112,8 +112,6 @@ export class Terminal {
                 this.input.value = "";
             }
         });
-
-        detectDevTools(() => this.warn());
     }
 
     /* ========================
@@ -324,17 +322,21 @@ export class Terminal {
 [ SYSTEM GUIDE ]
 
 목표:
-ROOT KEY를 찾아라
+시스템 로그를 분석하여 ROOT KEY를 찾아내십시오.
 
-명령어:
-ls
-cd [dir]
-cat [file]
-grep [pattern] [file]
-pwd
-clear
+사용 가능한 명령어:
+- ls        : 파일 목록
+- cd [dir]  : 디렉토리 이동
+- cat [file]: 파일 열기
+- grep [패턴] [파일]
 
-정답:
+힌트:
+- 로그는 수천 줄입니다.
+- 정답은 단 하나입니다.
+- 일부 데이터는 인코딩되어 있습니다.
+- 개발자 도구 사용은 감지될 수 있습니다.
+
+정답 입력:
 answer [값]
 
 문의:
@@ -342,15 +344,5 @@ answer [값]
 `;
 
         this.fastPrint(guide + "\n");
-    }
-
-    /* ========================
-       보안 연출
-    ======================== */
-
-    warn() {
-        setInterval(() => {
-            this.fastPrint("\n[WARN] DEBUGGING DETECTED");
-        }, 1000);
     }
 }
